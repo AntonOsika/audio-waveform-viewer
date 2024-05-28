@@ -1,15 +1,34 @@
-// Complete the Index page component here
-// Use chakra-ui
-import { Button } from "@chakra-ui/react"; // example
-import { FaPlus } from "react-icons/fa"; // example - use react-icons/fa for icons
+import React, { useState } from 'react';
+import { Box, Button, Input, VStack, Text } from '@chakra-ui/react';
+import { FaUpload } from 'react-icons/fa';
+import Waveform from '../components/Waveform';
 
 const Index = () => {
-  // TODO: Create the website here!
+  const [audioFile, setAudioFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setAudioFile(file);
+  };
+
   return (
-    <Button>
-      Hello world! <FaPlus />
-    </Button>
-  ); // example
+    <Box p={4} textAlign="center">
+      <VStack spacing={4}>
+        <Text fontSize="2xl" fontWeight="bold">Upload Audio and See Waveform</Text>
+        <Input
+          type="file"
+          accept="audio/*"
+          onChange={handleFileChange}
+          display="none"
+          id="audio-upload"
+        />
+        <Button as="label" htmlFor="audio-upload" leftIcon={<FaUpload />} colorScheme="teal">
+          Upload Audio
+        </Button>
+        {audioFile && <Waveform file={audioFile} />}
+      </VStack>
+    </Box>
+  );
 };
 
 export default Index;
